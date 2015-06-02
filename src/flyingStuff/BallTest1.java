@@ -24,11 +24,11 @@ class BallTest1 extends Canvas implements Runnable {
 
 		ball.moveAndDraw(window);
 
-		if (!(ball.getX() >= 10 && ball.getX() <= 550)) {
+		if (!(ball.getX() >= 10 && ball.getX() <= 500)) {
 			ball.setXV(-ball.getXV());
 		}
 
-		if (!(ball.getY() >= 10 && ball.getY() <= 450)) {
+		if (!(ball.getY() >= 10 && ball.getY() <= 500)) {
 			ball.setYV(-ball.getYV());
 		}
 	}
