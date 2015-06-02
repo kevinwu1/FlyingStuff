@@ -173,4 +173,14 @@ public class Ball implements Locatable {
 	public int getR2() {
 		return r * r;
 	}
+
+	@Override
+	public int getRight() {
+		return x + r;
+	}
+
+	@Override
+	public int getBot() {
+		return y + r;
+	}
 }

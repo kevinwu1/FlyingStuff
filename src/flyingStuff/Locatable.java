@@ -28,6 +28,10 @@ interface Locatable {
 
 	public int getLeft();
 
+	public int getRight();
+
+	public int getBot();
+
 	public int getTop();
 
 	public boolean collides(Locatable obj);

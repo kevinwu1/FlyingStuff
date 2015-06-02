@@ -11,8 +11,7 @@ class BallTest1 extends Canvas implements Runnable {
 		setBackground(Color.WHITE);
 		setVisible(true);
 
-		ball = new Ball(10, 10, 10, 3, 3, Color.RED);
-
+		ball = new Ball.BallBuilder().X(10).Y(10).R(10).XV(3).YV(3).C(Color.RED).build();
 		new Thread(this).start();
 	}
 
@@ -26,11 +25,11 @@ class BallTest1 extends Canvas implements Runnable {
 
 		ball.moveAndDraw(window);
 
-		if (!(ball.getX() >= 10 && ball.getX() <= 500)) {
+		if (ball.getLeft() < 0 || ball.getRight() > Runner.WIDTH) {
 			ball.setXV(-ball.getXV());
 		}
 
-		if (!(ball.getY() >= 10 && ball.getY() <= 500)) {
+		if (ball.getTop() < 0 || ball.getBot() > Runner.HEIGHT) {
 			ball.setYV(-ball.getYV());
 		}
 	}
