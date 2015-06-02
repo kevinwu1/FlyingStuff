@@ -36,7 +36,7 @@ class BallTest1 extends Canvas implements Runnable {
 	public void run() {
 		try {
 			while (true) {
-				Thread.currentThread().sleep(19);
+				Thread.currentThread().sleep(10);
 				repaint();
 			}
 		} catch (Exception e) {
