@@ -5,8 +5,8 @@ import java.awt.Component;
 import javax.swing.JFrame;
 
 public class Runner extends JFrame {
-	private static final int WIDTH = 550;
-	private static final int HEIGHT = 550;
+	static final int WIDTH = 550;
+	static final int HEIGHT = 550;
 
 	public Runner() {
 		super("PONG TESTER");
@@ -27,6 +27,7 @@ public class Runner extends JFrame {
 	}
 
 	public static void main(String args[]) {
+		@SuppressWarnings("unused")
 		Runner run = new Runner();
 	}
 }
