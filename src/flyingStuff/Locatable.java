@@ -1,6 +1,15 @@
 package flyingStuff;
 
 interface Locatable {
+
+	public int getXV();
+
+	public int getYV();
+
+	public void setXV(int xv);
+
+	public void setYV(int yv);
+
 	public void setXY(int x, int y);
 
 	public void setX(int x);
@@ -11,15 +20,11 @@ interface Locatable {
 
 	public int getY();
 
-	public void setWH(int w, int h);
+	public void setR(int r);
 
-	public void setW(int w);
+	public int getR();
 
-	public void setH(int h);
-
-	public int getW();
-
-	public int getH();
+	public int getR2();
 
 	public boolean collides(Locatable obj);
 }

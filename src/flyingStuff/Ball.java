@@ -1,7 +1,10 @@
 package flyingStuff;
 
+import java.awt.Color;
+
 public class Ball implements Locatable {
-	int x, y, w, h;
+	int x, y, r, xv, yv;
+	Color c;
 
 	@Override
 	public void setXY(int x, int y) {
@@ -30,34 +33,66 @@ public class Ball implements Locatable {
 	}
 
 	@Override
-	public void setWH(int w, int h) {
-		setW(w);
-	}
-
-	@Override
-	public void setW(int w) {
-		this.w = w;
-	}
-
-	@Override
-	public void setH(int h) {
-		this.h = h;
-	}
-
-	@Override
-	public int getW() {
-		return w;
-	}
-
-	@Override
-	public int getH() {
-		return h;
-	}
-
-	@Override
 	public boolean collides(Locatable obj) {
 		return false;
 		// TODO: implement collision
 	}
 
+	public void setColor(Color c) {
+		this.c = c;
+	}
+
+	public Color getColor() {
+		return c;
+	}
+
+	@Override
+	public int getXV() {
+		return xv;
+	}
+
+	@Override
+	public int getYV() {
+		return yv;
+	}
+
+	@Override
+	public void setXV(int xv) {
+		this.xv = xv;
+	}
+
+	@Override
+	public void setYV(int yv) {
+		this.yv = yv;
+	}
+
+	// public void moveAndDraw(Graphics window) {
+	// window.clearRect(getX(), getY(), getW(), getH());
+	// setX(getX() + getXV());
+	// setY(getY() + getYV());
+	// draw(window, getColor());
+	// }
+	// TODO: implement x,y in the middle
+
+	// @Override
+	// public void draw(Graphics window, Color c) {
+	// window.setColor(c);
+	// window.fillOval(getX(), getY(), getW(), getH());
+	// }
+	// TODO: implement x,y in the middle
+
+	@Override
+	public void setR(int r) {
+		this.r = r;
+	}
+
+	@Override
+	public int getR() {
+		return r;
+	}
+
+	@Override
+	public int getR2() {
+		return r * r;
+	}
 }
