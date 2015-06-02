@@ -11,7 +11,7 @@ class BallTest1 extends Canvas implements Runnable {
 		setBackground(Color.WHITE);
 		setVisible(true);
 
-		ball = new Ball();
+		ball = new Ball(10, 10, 10, 3, 3);
 
 		new Thread(this).start();
 	}

@@ -26,5 +26,9 @@ interface Locatable {
 
 	public int getR2();
 
+	public int getLeft();
+
+	public int getTop();
+
 	public boolean collides(Locatable obj);
 }
