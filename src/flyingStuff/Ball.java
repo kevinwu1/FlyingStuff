@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 public class Ball implements Locatable {
+	static final int X = 50, Y = 50, R = 10, XV = 3, YV = 3;
+	static final Color C = Color.RED;
 	int x, y, r, xv, yv;
 	Color c;
 
@@ -16,13 +18,61 @@ public class Ball implements Locatable {
 
 	}
 
-	public Ball(int x, int y, int r, int xv, int yv) {
+	public Ball(int x, int y, int r, int xv, int yv, Color c) {
 		setX(x);
 		setY(r);
 		setR(5);
 		setXV(xv);
 		setYV(yv);
+		setColor(c);
+	}
 
+	static class BallBuilder {
+		private int x, y, r, xv, yv;
+		private Color c;
+
+		BallBuilder() {
+			x = X;
+			y = Y;
+			r = R;
+			xv = XV;
+			yv = YV;
+			c = C;
+		}
+
+		BallBuilder X(int x) {
+			this.x = x;
+			return this;
+		}
+
+		BallBuilder Y(int y) {
+			this.y = y;
+			return this;
+		}
+
+		BallBuilder R(int r) {
+			this.r = r;
+			return this;
+		}
+
+		BallBuilder XV(int xv) {
+			this.xv = xv;
+			return this;
+		}
+
+		BallBuilder YV(int yv) {
+			this.yv = yv;
+			return this;
+		}
+
+		BallBuilder C(Color c) {
+			this.c = c;
+			return this;
+		}
+
+		Ball build() {
+			return new Ball(x, y, r, xv, yv, c);
+		}
 	}
 
 	@Override
@@ -85,10 +135,12 @@ public class Ball implements Locatable {
 		this.yv = yv;
 	}
 
+	@Override
 	public int getLeft() {
 		return getX() - getR();
 	}
 
+	@Override
 	public int getTop() {
 		return getY() - getR();
 	}
