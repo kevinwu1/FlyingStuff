@@ -150,11 +150,22 @@ public class Ball implements Locatable {
 		setX(getX() + getXV());
 		setY(getY() + getYV());
 		draw(window, getColor());
+		turn();
 	}
 
 	public void draw(Graphics window, Color c) {
 		window.setColor(c);
 		window.fillOval(getLeft(), getTop(), getR() * 2, getR() * 2);
+	}
+
+	public void turn() {
+		if (getLeft() < 0 || getRight() > BallTest1.WIDTH) {
+			setXV(-getXV());
+		}
+
+		if (getTop() < 0 || getBot() > BallTest1.HEIGHT) {
+			setYV(-getYV());
+		}
 	}
 
 	// TODO: implement x,y in the middle

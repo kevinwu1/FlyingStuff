@@ -7,14 +7,19 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 class BallTest1 extends Canvas implements Runnable {
-	private Ball ball;
+	BallList balls = new BallList();
+	public static final int WIDTH = 550;
+	public static final int HEIGHT = 550;
 
 	private BufferedImage back;
 
 	public BallTest1() {
 		setBackground(Color.WHITE);
 		setVisible(true);
-		ball = new Ball.BallBuilder().R(10).XV(30).YV(90).C(Color.RED).build();
+		BallList balls = new BallList();
+		balls.add();
+		balls.add();
+		balls.add();
 		new Thread(this).start();
 	}
 
@@ -29,16 +34,18 @@ class BallTest1 extends Canvas implements Runnable {
 		if (back == null)
 			back = (BufferedImage) createImage(getWidth(), getHeight());
 		Graphics graphToBack = back.createGraphics();
+		balls.drawAll(window);
+		// ball.moveAndDraw(graphToBack);
 
-		ball.moveAndDraw(graphToBack);
-
-		if (ball.getLeft() < 0 || ball.getRight() > window.getClipBounds().getWidth()) {
-			ball.setXV(-ball.getXV());
-		}
-
-		if (ball.getTop() < 0 || ball.getBot() > window.getClipBounds().getHeight()) {
-			ball.setYV(-ball.getYV());
-		}
+		// if (ball.getLeft() < 0
+		// || ball.getRight() > window.getClipBounds().getWidth()) {
+		// ball.setXV(-ball.getXV());
+		// }
+		//
+		// if (ball.getTop() < 0
+		// || ball.getBot() > window.getClipBounds().getHeight()) {
+		// ball.setYV(-ball.getYV());
+		// }
 		twoDGraph.drawImage(back, null, 0, 0);
 	}
 
@@ -49,8 +56,7 @@ class BallTest1 extends Canvas implements Runnable {
 				Thread.sleep(10);
 				repaint();
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 		}
 	}
 }
