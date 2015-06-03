@@ -23,5 +23,11 @@ public class Runner extends JFrame {
 	public static void main(String args[]) {
 		@SuppressWarnings("unused")
 		Runner run = new Runner();
+		// TODO
+		// Mouse click converge.
+		// keyboard buttons add ball,
+
+		// features
+		// sound
 	}
 }
