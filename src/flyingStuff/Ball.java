@@ -20,8 +20,8 @@ public class Ball implements Locatable {
 
 	public Ball(int x, int y, int r, int xv, int yv, Color c) {
 		setX(x);
-		setY(r);
-		setR(5);
+		setY(y);
+		setR(r);
 		setXV(xv);
 		setYV(yv);
 		setColor(c);

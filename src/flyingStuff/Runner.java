@@ -11,12 +11,6 @@ public class Runner extends JFrame {
 	public Runner() {
 		super("Bounce");
 		setSize(WIDTH, HEIGHT);
-
-		// getContentPane().add(new BlockTestTwo());
-
-		// uncomment when you are ready to test the Ball
-		// /getContentPane().add(new BallTestTwo());
-
 		BallTest1 padTest = new BallTest1();
 		((Component) padTest).setFocusable(true);
 		getContentPane().add(padTest);
