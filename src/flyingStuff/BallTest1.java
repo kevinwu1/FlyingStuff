@@ -8,18 +8,20 @@ import java.awt.image.BufferedImage;
 
 class BallTest1 extends Canvas implements Runnable {
 	BallList balls = new BallList();
-	public static final int WIDTH = 550;
-	public static final int HEIGHT = 550;
+	public static final int WIDTH = 525;
+	public static final int HEIGHT = 525;
 
 	private BufferedImage back;
 
 	public BallTest1() {
 		setBackground(Color.WHITE);
 		setVisible(true);
-		BallList balls = new BallList();
-		balls.add();
-		balls.add();
-		balls.add();
+		balls = new BallList();
+		for (int i = 0; i < 1; i++) {
+			balls.add();
+		}
+
+		System.out.println(balls.getLength());
 		new Thread(this).start();
 	}
 
@@ -30,11 +32,12 @@ class BallTest1 extends Canvas implements Runnable {
 
 	@Override
 	public void paint(Graphics window) {
+
 		Graphics2D twoDGraph = (Graphics2D) window;
 		if (back == null)
 			back = (BufferedImage) createImage(getWidth(), getHeight());
 		Graphics graphToBack = back.createGraphics();
-		balls.drawAll(window);
+		balls.drawAll(graphToBack);
 		// ball.moveAndDraw(graphToBack);
 
 		// if (ball.getLeft() < 0

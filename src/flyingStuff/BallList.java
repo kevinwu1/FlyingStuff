@@ -19,17 +19,25 @@ public class BallList {
 
 		ballList.add(new Ball.BallBuilder()
 				.X((int) (Math.random() * Runner.WIDTH))
-				.Y((int) (Math.random() * Runner.HEIGHT)).R(10).XV(3).YV(4)
-				.C(a[c++ % (a.length)]).build());
+				.Y((int) (Math.random() * Runner.HEIGHT)).R(20)
+				.XV((int) (Math.random() * 4) + 2)
+				.YV((int) (Math.random() * 4) + 2).C(a[c++ % (a.length)])
+				.build());
 
 	}
 
 	public void drawAll(Graphics window) {
-		for (Ball b : ballList) {
-			b.moveAndDraw(window);
+		// System.out.println("a");
+		for (int i = 0; i < ballList.size(); i++) {
+
+			ballList.get(i).moveAndDraw(window);
 
 		}
 
+	}
+
+	public int getLength() {
+		return ballList.size();
 	}
 
 }

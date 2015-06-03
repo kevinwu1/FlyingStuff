@@ -9,7 +9,7 @@ public class Runner extends JFrame {
 	static final int HEIGHT = 550;
 
 	public Runner() {
-		super("PONG TESTER");
+		super("Bounce");
 		setSize(WIDTH, HEIGHT);
 
 		// getContentPane().add(new BlockTestTwo());
