@@ -27,9 +27,14 @@ public class BallList {
 
 	public void drawAll(Graphics window) {
 		// System.out.println("a");
-		for (int i = 0; i < ballList.size(); i++) {
-			ballList.get(i).moveAndDraw(window);
+		for (Ball b : ballList) {
+			b.clear(window);
 		}
+		for (Ball b : ballList) {
+			b.move();
+			b.draw(window, b.getColor());
+		}
+
 	}
 
 	public int getLength() {
