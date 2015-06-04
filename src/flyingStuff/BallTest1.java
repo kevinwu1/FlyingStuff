@@ -5,13 +5,14 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 
-class BallTest1 extends Canvas implements Runnable {
+class BallTest1 extends Canvas implements Runnable, KeyListener {
 	BallList balls = new BallList();
 	public static final int WIDTH = 525;
 	public static final int HEIGHT = 525;
-	boolean[] keys = new boolean[5];
+	private boolean[] keys;
 
 	private BufferedImage back;
 
@@ -19,11 +20,12 @@ class BallTest1 extends Canvas implements Runnable {
 		setBackground(Color.WHITE);
 		setVisible(true);
 		balls = new BallList();
-		for (int i = 0; i < 20; i++) {
+		for (int i = 0; i < 2; i++) {
 			balls.add();
 		}
+		keys = new boolean[1];
 
-		System.out.println(balls.getLength());
+		// System.out.println(balls.getLength());
 		new Thread(this).start();
 	}
 
@@ -40,6 +42,10 @@ class BallTest1 extends Canvas implements Runnable {
 			back = (BufferedImage) createImage(getWidth(), getHeight());
 		Graphics graphToBack = back.createGraphics();
 		balls.drawAll(graphToBack);
+		if (keys[0] == true) {
+			System.out.println("a");
+			balls.add();
+		}
 		twoDGraph.drawImage(back, null, 0, 0);
 	}
 
@@ -54,6 +60,10 @@ class BallTest1 extends Canvas implements Runnable {
 		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
 			keys[0] = false;
 		}
+
+	}
+
+	public void keyTyped(KeyEvent e) {
 
 	}
 
