@@ -7,8 +7,7 @@ import java.util.List;
 
 public class BallList {
 	private List<Ball> ballList;
-	private static final Color[] a = { Color.GREEN, Color.BLUE, Color.BLACK,
-			Color.RED, };
+	private static final Color[] a = { Color.GREEN, Color.BLUE, Color.BLACK, Color.RED, };
 	int c = 0;
 
 	public BallList() {
@@ -16,24 +15,21 @@ public class BallList {
 	}
 
 	public void add() {
+		int r = 25;
+		ballList.add(new Ball.BallBuilder().X(rand(r, Runner.INNER_WIDTH - r)).Y(rand(r, Runner.INNER_HEIGHT - r)).R(r).XV(rand(2, 6)).YV(rand(2, 6))
+				.C(a[c++ % a.length]).build());
 
-		ballList.add(new Ball.BallBuilder()
-				.X((int) (Math.random() * Runner.WIDTH))
-				.Y((int) (Math.random() * Runner.HEIGHT)).R(20)
-				.XV((int) (Math.random() * 4) + 2)
-				.YV((int) (Math.random() * 4) + 2).C(a[c++ % (a.length)])
-				.build());
+	}
 
+	private static int rand(int lo, int hi) {
+		return lo + (int) (Math.random() * (hi - lo));
 	}
 
 	public void drawAll(Graphics window) {
 		// System.out.println("a");
 		for (int i = 0; i < ballList.size(); i++) {
-
 			ballList.get(i).moveAndDraw(window);
-
 		}
-
 	}
 
 	public int getLength() {

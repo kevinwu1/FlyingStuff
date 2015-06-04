@@ -146,7 +146,9 @@ public class Ball implements Locatable {
 	}
 
 	public void moveAndDraw(Graphics window) {
-		window.clearRect(getLeft(), getTop(), getR() * 2, getR() * 2);
+		// window.clearRect(getLeft(), getTop(), getR() * 2, getR() * 2);
+		window.setColor(Color.WHITE);
+		window.fillOval(getLeft(), getTop(), getR() * 2, getR() * 2);
 		setX(getX() + getXV());
 		setY(getY() + getYV());
 		draw(window, getColor());
@@ -159,16 +161,14 @@ public class Ball implements Locatable {
 	}
 
 	public void turn() {
-		if (getLeft() < 0 || getRight() > BallTest1.WIDTH) {
+		if (getLeft() < 0 || getRight() > Runner.INNER_WIDTH) {
 			setXV(-getXV());
 		}
 
-		if (getTop() < 0 || getBot() > BallTest1.HEIGHT) {
+		if (getTop() < 0 || getBot() > Runner.INNER_HEIGHT) {
 			setYV(-getYV());
 		}
 	}
-
-	// TODO: implement x,y in the middle
 
 	@Override
 	public void setR(int r) {

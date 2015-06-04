@@ -8,8 +8,8 @@ import java.awt.image.BufferedImage;
 
 class BallTest1 extends Canvas implements Runnable {
 	BallList balls = new BallList();
-	public static final int WIDTH = 525;
-	public static final int HEIGHT = 525;
+	public static int WIDTH;
+	public static int HEIGHT;
 
 	private BufferedImage back;
 
@@ -17,11 +17,9 @@ class BallTest1 extends Canvas implements Runnable {
 		setBackground(Color.WHITE);
 		setVisible(true);
 		balls = new BallList();
-		for (int i = 0; i < 1; i++) {
+		for (int i = 0; i < 100; i++) {
 			balls.add();
 		}
-
-		System.out.println(balls.getLength());
 		new Thread(this).start();
 	}
 
@@ -59,7 +57,8 @@ class BallTest1 extends Canvas implements Runnable {
 				Thread.sleep(10);
 				repaint();
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 		}
 	}
 }
