@@ -16,10 +16,10 @@ public class BallList {
 	}
 
 	public void add() {
-
+		int r = 15;
 		ballList.add(new Ball.BallBuilder()
-				.X((int) (Math.random() * Runner.WIDTH))
-				.Y((int) (Math.random() * Runner.HEIGHT)).R(20)
+				.X((int) (Math.random() * (Runner.WIDTH - r - r)) + r)
+				.Y((int) (Math.random() * (Runner.HEIGHT - r - r)) + r).R(r)
 				.XV((int) (Math.random() * 4) + 2)
 				.YV((int) (Math.random() * 4) + 2).C(a[c++ % (a.length)])
 				.build());

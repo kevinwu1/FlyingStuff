@@ -5,8 +5,8 @@ import java.awt.Component;
 import javax.swing.JFrame;
 
 public class Runner extends JFrame {
-	static final int WIDTH = 550;
-	static final int HEIGHT = 550;
+	static final int WIDTH = 525;
+	static final int HEIGHT = 525;
 
 	public Runner() {
 		super("Bounce");
