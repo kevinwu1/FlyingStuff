@@ -20,7 +20,7 @@ class BallTest1 extends Canvas implements Runnable, KeyListener {
 		setBackground(Color.WHITE);
 		setVisible(true);
 		balls = new BallList();
-		for (int i = 0; i < 100; i++) {
+		for (int i = 0; i < 50; i++) {
 			balls.add();
 		}
 		keys = new boolean[2];
@@ -43,7 +43,7 @@ class BallTest1 extends Canvas implements Runnable, KeyListener {
 		Graphics graphToBack = back.createGraphics();
 		balls.drawAll(graphToBack);
 		if (keys[0] == true) {
-			System.out.println("a");
+
 			balls.add();
 		}
 		twoDGraph.drawImage(back, null, 0, 0);
@@ -52,7 +52,7 @@ class BallTest1 extends Canvas implements Runnable, KeyListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-			System.out.println("a");
+
 			keys[0] = true;
 		}
 
