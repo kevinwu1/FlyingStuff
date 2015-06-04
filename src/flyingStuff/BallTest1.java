@@ -23,8 +23,8 @@ class BallTest1 extends Canvas implements Runnable, KeyListener {
 		for (int i = 0; i < 100; i++) {
 			balls.add();
 		}
-		keys = new boolean[1];
-
+		keys = new boolean[2];
+		this.addKeyListener(this);
 		// System.out.println(balls.getLength());
 		new Thread(this).start();
 	}
@@ -52,6 +52,7 @@ class BallTest1 extends Canvas implements Runnable, KeyListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+			System.out.println("a");
 			keys[0] = true;
 		}
 
@@ -77,8 +78,7 @@ class BallTest1 extends Canvas implements Runnable, KeyListener {
 				Thread.sleep(10);
 				repaint();
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 		}
 	}
 }
