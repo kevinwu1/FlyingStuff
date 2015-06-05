@@ -3,10 +3,10 @@ package flyingStuff;
 import java.awt.Color;
 import java.awt.Graphics;
 
-public class Ball implements Locatable {
+public class Ball extends Moveable {
 	static final int X = 50, Y = 50, R = 10, XV = 3, YV = 3;
 	static final Color C = Color.RED;
-	int x, y, r, xv, yv;
+	int r;
 	Color c;
 
 	public Ball() {
@@ -113,26 +113,6 @@ public class Ball implements Locatable {
 
 	public Color getColor() {
 		return c;
-	}
-
-	@Override
-	public int getXV() {
-		return xv;
-	}
-
-	@Override
-	public int getYV() {
-		return yv;
-	}
-
-	@Override
-	public void setXV(int xv) {
-		this.xv = xv;
-	}
-
-	@Override
-	public void setYV(int yv) {
-		this.yv = yv;
 	}
 
 	@Override
