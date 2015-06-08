@@ -48,6 +48,23 @@ public class BallList {
 
 	}
 
+	public void converge(int x, int y) {
+		for (Ball b : ballList) {
+			int dx = x - b.getX();
+			int dy = y - b.getY();
+			b.setXV(dx / 100);
+			b.setYV(dy / 100);
+		}
+	}
+
+	public void scatter() {
+		for (Ball b : ballList) {
+			double ang = Math.random() * Math.PI * 2;
+			b.setXV((int) (Math.cos(ang) * 5));
+			b.setYV((int) (Math.sin(ang) * 5));
+		}
+	}
+
 	public int getLength() {
 		return ballList.size();
 	}

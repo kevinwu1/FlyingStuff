@@ -18,7 +18,7 @@ class BallTest1 extends Canvas implements Runnable, KeyListener, MouseListener,
 	public static int HEIGHT;
 	private boolean[] keys;
 	private boolean pressed = false;
-	private static final int BALL_CD = 30;
+	private static final int BALL_CD = 3;
 	private int ballCD = 0;
 	private int ballkillCD = 0;
 	@SuppressWarnings("unused")
@@ -131,10 +131,12 @@ class BallTest1 extends Canvas implements Runnable, KeyListener, MouseListener,
 		x = e.getX();
 		y = e.getY();
 		System.out.println("down: " + e.getX() + ", " + e.getY());
+		balls.converge(e.getX(), e.getY());
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
+		balls.scatter();
 		System.out.println("up");
 	}
 
