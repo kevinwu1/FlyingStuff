@@ -9,7 +9,6 @@ public class BallList {
 	private List<Ball> ballList;
 	int c = 0;
 
-	@SuppressWarnings("unused")
 	public BallList() {
 		ballList = new ArrayList<Ball>();
 	}
