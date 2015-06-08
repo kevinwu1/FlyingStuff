@@ -16,8 +16,19 @@ public class BallList {
 
 	public void add() {
 		int r = 25;
-		ballList.add(new Ball.BallBuilder().X(rand(r, Runner.INNER_WIDTH - r)).Y(rand(r, Runner.INNER_HEIGHT - r)).R(rand(5, 20)).XV(rand(2, 6)).YV(rand(2, 6))
+		ballList.add(new Ball.BallBuilder().X(rand(r, Runner.INNER_WIDTH - r))
+				.Y(rand(r, Runner.INNER_HEIGHT - r)).R(rand(5, 20))
+				.XV(rand(2, 6)).YV(rand(2, 6))
 				.C(new Color(rand(0, 256), rand(0, 256), rand(0, 256))).build());
+
+	}
+
+	public void remove(Graphics window) {
+		if (ballList.size() > 0) {
+			int removed = ballList.size() - 1;
+			ballList.get(removed).clear(window);
+			ballList.remove(removed);
+		}
 
 	}
 

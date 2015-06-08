@@ -11,7 +11,8 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 
-class BallTest1 extends Canvas implements Runnable, KeyListener, MouseListener, MouseMotionListener {
+class BallTest1 extends Canvas implements Runnable, KeyListener, MouseListener,
+		MouseMotionListener {
 	BallList balls = new BallList();
 	public static int WIDTH;
 	public static int HEIGHT;
@@ -19,6 +20,7 @@ class BallTest1 extends Canvas implements Runnable, KeyListener, MouseListener, 
 	private boolean pressed = false;
 	private static final int BALL_CD = 30;
 	private int ballCD = 0;
+	private int ballkillCD = 0;
 	@SuppressWarnings("unused")
 	private int x, y;
 
@@ -53,13 +55,20 @@ class BallTest1 extends Canvas implements Runnable, KeyListener, MouseListener, 
 		if (keys[0]) {
 			if ((ballCD = (ballCD + 1) % BALL_CD) == 1)
 				balls.add();
-		}
-		else if (ballCD != 0) {
+		} else if (ballCD != 0) {
 			ballCD = (ballCD + 1) % BALL_CD;
 		}
 		if (pressed) {
 
 		}
+		if (keys[1]) {
+			if ((ballkillCD = (ballkillCD + 1) % BALL_CD) == 1) {
+				balls.remove(graphToBack);
+			}
+		} else if (ballkillCD != 0) {
+			ballkillCD = (ballkillCD + 1) % BALL_CD;
+		}
+
 		twoDGraph.drawImage(back, null, 0, 0);
 	}
 
@@ -69,6 +78,9 @@ class BallTest1 extends Canvas implements Runnable, KeyListener, MouseListener, 
 
 			keys[0] = true;
 		}
+		if (e.getKeyCode() == Runner.removeBallKey) {
+			keys[1] = true;
+		}
 
 	}
 
@@ -76,6 +88,9 @@ class BallTest1 extends Canvas implements Runnable, KeyListener, MouseListener, 
 	public void keyReleased(KeyEvent e) {
 		if (e.getKeyCode() == Runner.addBallKey) {
 			keys[0] = false;
+		}
+		if (e.getKeyCode() == Runner.removeBallKey) {
+			keys[1] = false;
 		}
 
 	}
@@ -92,8 +107,7 @@ class BallTest1 extends Canvas implements Runnable, KeyListener, MouseListener, 
 				Thread.sleep(10);
 				repaint();
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 		}
 	}
 
