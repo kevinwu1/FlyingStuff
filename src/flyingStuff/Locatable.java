@@ -24,8 +24,6 @@ interface Locatable {
 
 	public int getR();
 
-	public int getR2();
-
 	public int getLeft();
 
 	public int getRight();

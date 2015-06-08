@@ -6,7 +6,7 @@ import java.awt.Graphics;
 public class Ball implements Locatable {
 	static final int X = 50, Y = 50, R = 10, XV = 3, YV = 3;
 	static final Color C = Color.RED;
-	int x, y, r, xv, yv;
+	private int x, y, r, xv, yv;
 	Color c;
 
 	public Ball() {
@@ -103,8 +103,10 @@ public class Ball implements Locatable {
 
 	@Override
 	public boolean collides(Locatable obj) {
-		return false;
-		// TODO: implement collision
+		int dx = x - obj.getX();
+		int dy = y - obj.getY();
+		int rt = r + obj.getR();
+		return dx * dx + dy * dy < rt * rt;
 	}
 
 	public void setColor(Color c) {
@@ -179,8 +181,6 @@ public class Ball implements Locatable {
 		turn();
 	}
 
-	// TODO: implement x,y in the middle
-
 	@Override
 	public void setR(int r) {
 		this.r = r;
@@ -192,11 +192,6 @@ public class Ball implements Locatable {
 	}
 
 	@Override
-	public int getR2() {
-		return r * r;
-	}
-
-	@Override
 	public int getRight() {
 		return x + r;
 	}
@@ -204,5 +199,9 @@ public class Ball implements Locatable {
 	@Override
 	public int getBot() {
 		return y + r;
+	}
+
+	public static void ballBounce(Ball b1, Ball b2) {
+
 	}
 }
