@@ -39,22 +39,19 @@ public class Runner extends JFrame {
 		startBut.setBackground(Color.GREEN);
 		startBut.setText("Start");
 		startBut.setSize(200, 50);
-		startBut.setLocation((Runner.INNER_WIDTH - startBut.getWidth()) / 2,
-				Runner.INNER_HEIGHT - 100);
+		startBut.setLocation((Runner.INNER_WIDTH - startBut.getWidth()) / 2, Runner.INNER_HEIGHT - 100);
 		titleScreen.add(startBut);
 
 		JLabel credits = new JLabel();
 		credits.setText("Made by Kevin Wu and Nathan Mar");
 		credits.setSize(200, 50);
-		credits.setLocation((INNER_WIDTH - 200) / 2,
-				INNER_HEIGHT - credits.getHeight());
+		credits.setLocation((INNER_WIDTH - 200) / 2, INNER_HEIGHT - credits.getHeight());
 		titleScreen.add(credits);
 
-		JLabel instr = new JLabel(
-				"Press space to spawn a ball. Click to make balls converge.");
-		instr.setSize(350, 200);
-		instr.setLocation((INNER_WIDTH - instr.getWidth()) / 2,
-				INNER_HEIGHT - 600);
+		JLabel instr = new JLabel("Press " + KeyEvent.getKeyText(addBallKey) + " to spawn a ball. Press " + KeyEvent.getKeyText(removeBallKey)
+				+ " to remove a ball. Click to make balls converge.");
+		instr.setSize(instr.getText().length() * 6, 200);
+		instr.setLocation((INNER_WIDTH - instr.getWidth()) / 2, INNER_HEIGHT - 600);
 		titleScreen.add(instr);
 
 		run.add(titleScreen);
