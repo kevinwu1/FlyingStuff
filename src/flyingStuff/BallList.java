@@ -16,11 +16,13 @@ public class BallList {
 
 	public void add() {
 		int r = 25;
-		ballList.add(new Ball.BallBuilder().X(rand(r, Runner.INNER_WIDTH - r))
-				.Y(rand(r, Runner.INNER_HEIGHT - r)).R(rand(5, 20))
-				.XV(rand(2, 6)).YV(rand(2, 6))
-				.C(new Color(rand(0, 256), rand(0, 256), rand(0, 256))).build());
+		ballList.add(new Ball.BallBuilder().X(rand(r, Runner.INNER_WIDTH - r)).Y(rand(r, Runner.INNER_HEIGHT - r))
+				.R(rand(5, 20)).C(new Color(rand(0, 256), rand(0, 256), rand(0, 256))).build());
 
+	}
+
+	public void add(Ball b) {
+		ballList.add(b);
 	}
 
 	public void remove(Graphics window) {
@@ -36,32 +38,50 @@ public class BallList {
 		return lo + (int) (Math.random() * (hi - lo));
 	}
 
-	public void drawAll(Graphics window) {
+	public void drawAll(Graphics window, int t) {
 		// System.out.println("a");
 		for (Ball b : ballList) {
 			b.clear(window);
 		}
 		for (Ball b : ballList) {
-			b.move();
+			b.move(t);
 			b.draw(window, b.getColor());
 		}
 
 	}
 
-	public void converge(int x, int y) {
+	public void converge(final int x, final int y, final int clickTime) {
+		final int time = 50;
 		for (Ball b : ballList) {
-			int dx = x - b.getX();
-			int dy = y - b.getY();
-			b.setXV(dx / 100);
-			b.setYV(dy / 100);
+			final int xs = b.getX();
+			final int ys = b.getY();
+			final int dx = x - xs;
+			final int dy = y - ys;
+			b.moveAbs(new Ball.Function() {
+				@Override
+				public int y(int t) {
+					return ys + (dy * (t - clickTime)) / time;
+				}
+
+				@Override
+				public int x(int t) {
+					// System.out.println(t - clickTime + ": " + (xs + (dx * (t - clickTime)) / time));
+					return xs + (dx * (t - clickTime)) / time;
+				}
+
+				@Override
+				public int time() {
+					return time + clickTime;
+				}
+			});
 		}
 	}
 
 	public void scatter() {
 		for (Ball b : ballList) {
 			double ang = Math.random() * Math.PI * 2;
-			b.setXV((int) (Math.cos(ang) * 5));
-			b.setYV((int) (Math.sin(ang) * 5));
+			int vel = 10;
+			b.moveLineAcc(vel * Math.cos(ang), vel * Math.sin(ang));
 		}
 	}
 

@@ -2,14 +2,6 @@ package flyingStuff;
 
 interface Locatable {
 
-	public int getXV();
-
-	public int getYV();
-
-	public void setXV(int xv);
-
-	public void setYV(int yv);
-
 	public void setXY(int x, int y);
 
 	public void setX(int x);

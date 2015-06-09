@@ -35,27 +35,25 @@ public class Runner extends JFrame {
 		final JPanel titleScreen = new JPanel();
 		titleScreen.setLayout(null);
 
-		JButton startBut = new JButton();
-		startBut.setBackground(Color.GREEN);
-		startBut.setText("Start");
-		startBut.setSize(200, 50);
-		startBut.setLocation((Runner.INNER_WIDTH - startBut.getWidth()) / 2, Runner.INNER_HEIGHT - 100);
-		titleScreen.add(startBut);
-
 		JLabel credits = new JLabel();
 		credits.setText("Made by Kevin Wu and Nathan Mar");
 		credits.setSize(200, 50);
 		credits.setLocation((INNER_WIDTH - 200) / 2, INNER_HEIGHT - credits.getHeight());
 		titleScreen.add(credits);
 
-		JLabel instr = new JLabel("Press " + KeyEvent.getKeyText(addBallKey) + " to spawn a ball. Press " + KeyEvent.getKeyText(removeBallKey)
-				+ " to remove a ball. Click to make balls converge.");
+		JLabel instr = new JLabel("Press " + KeyEvent.getKeyText(addBallKey) + " to spawn a ball. Press "
+				+ KeyEvent.getKeyText(removeBallKey) + " to remove a ball. Click to make balls converge.");
 		instr.setSize(instr.getText().length() * 6, 200);
 		instr.setLocation((INNER_WIDTH - instr.getWidth()) / 2, INNER_HEIGHT - 600);
 		titleScreen.add(instr);
 
+		JButton startBut = new JButton("Start");
+		startBut.setBackground(Color.GREEN);
+		startBut.setText("Start");
+		startBut.setSize(200, 50);
+		startBut.setLocation((Runner.INNER_WIDTH - startBut.getWidth()) / 2, Runner.INNER_HEIGHT - 100);
+		titleScreen.add(startBut);
 		run.add(titleScreen);
-
 		startBut.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -64,9 +62,6 @@ public class Runner extends JFrame {
 				run.add(new BallTest1());
 			}
 		});
-		// TitleScreen title = new TitleScreen();
-		// ((Component) title).setFocusable(true);
-		// run.getContentPane().add(title);
 
 		// TODO
 		// Mouse click converge.
