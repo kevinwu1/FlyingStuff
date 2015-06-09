@@ -56,14 +56,14 @@ public class BallList {
 			final int ys = b.getY();
 			final int dx = x - xs;
 			final int dy = y - ys;
-			b.moveAbs(new Ball.Function() {
+			b.moveCurveAbs(new Ball.Function<Integer>() {
 				@Override
-				public int y(int t) {
+				public Integer y(Integer t) {
 					return ys + (dy * (t - clickTime)) / time;
 				}
 
 				@Override
-				public int x(int t) {
+				public Integer x(Integer t) {
 					return xs + (dx * (t - clickTime)) / time;
 				}
 

@@ -11,6 +11,8 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 
+import flyingStuff.Ball.Function;
+
 class BallTest1 extends Canvas implements Runnable, KeyListener, MouseListener, MouseMotionListener {
 	BallList balls = new BallList();
 	public static int WIDTH;
@@ -27,28 +29,51 @@ class BallTest1 extends Canvas implements Runnable, KeyListener, MouseListener, 
 		setBackground(Color.WHITE);
 		setVisible(true);
 		balls = new BallList();
-		for (int i = 0; i < 1; i++) {
-			balls.add();
-		}
-		// Ball ball1 = new Ball.BallBuilder().XY(900, 100).C(Color.RED).R(200).build();
+		// for (int i = 0; i < 1; i++) {
+		// balls.add();
+		// }
+		Ball ball1 = new Ball.BallBuilder().XY(100, 500).C(Color.RED).R(20).build();
 		// ball1.moveLine(3, 4);
-		// ball1.moveAbs(new Function() {
-		// @Override
-		// public int x(int t) {
-		// return 900 + t * 10;
-		// }
-		//
-		// @Override
-		// public int y(int t) {
-		// return 100 + t * 15;
-		// }
+		// ball1.moveCurveRel(new Function<Double>() {
+		// final int tim = 20;
 		//
 		// @Override
 		// public int time() {
-		// return 100000;
+		// return tim;
 		// }
-		// });
-		// balls.add(ball1);
+		//
+		// @Override
+		// public Double x(Double t) {
+		// return t;
+		// }
+		//
+		// @Override
+		// public Double y(Double t) {
+		// System.out.println(t);
+		// return Math.sin(Math.PI * t * 2) / 3;
+		// }
+		// }, 600, 500);
+		Function<Double> lower = new Function<Double>() {
+			private final int tim = 20;
+
+			@Override
+			public int time() {
+				return tim;
+			}
+
+			@Override
+			public Double x(Double t) {
+				return (1 - Math.cos(t * Math.PI)) / 2;
+			}
+
+			@Override
+			public Double y(Double t) {
+				return Math.sin(t * Math.PI) / 2;
+			}
+		};
+		// ball1.moveCurveRel(lower, 700, 500);
+		ball1.moveCycleCurve(new int[] { 600 }, new int[] { 500 }, lower, lower);
+		balls.add(ball1);
 
 		keys = new boolean[2];
 		this.addKeyListener(this);
