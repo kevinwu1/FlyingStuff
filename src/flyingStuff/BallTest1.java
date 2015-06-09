@@ -210,14 +210,17 @@ class BallTest1 extends Canvas implements Runnable, KeyListener, MouseListener, 
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		if (x1 < 0 || x2 < 0 || y1 < 0 || y2 < 0)
+		// System.out.println(x1 + "," + x2 + "|" + y1 + "," + y2);
+		if (x1 < 0 || x2 < 0 || y1 < 0 || y2 < 0) {
 			balls.scatter(10);
+		}
 		else {
 			int dxv = x2 - x1;
 			int dyv = y2 - y1;
 			int vel = (int) Math.sqrt(dxv * dxv + dyv * dyv);
 			balls.scatter(vel);
 		}
+		x1 = x2 = y1 = y2 = -1;
 	}
 
 	@Override
