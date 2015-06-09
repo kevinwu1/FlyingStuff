@@ -11,10 +11,7 @@ public class Ball implements Locatable {
 	private Function abs;
 
 	// boundary detection
-	int rb = Runner.INNER_WIDTH - r;
-	int lb = r;
-	int tb = r;
-	int bb = Runner.INNER_HEIGHT - r;
+	private final int rb, lb, tb, bb;
 
 	private short moveMode;
 	// moveAbs, mode 0
@@ -35,21 +32,33 @@ public class Ball implements Locatable {
 	}
 
 	public Ball() {
-		setX((int) (Math.random() * 200));
-		setY((int) (Math.random() * 200));
-		setR(5);
-
+		this(new BallBuilder().XY((int) (Math.random() * 200), (int) (Math.random() * 200)).R(5));
 	}
 
 	public Ball(int x, int y, int r, Color c) {
 		setX(x);
 		setY(y);
 		setR(r);
+		rb = Runner.INNER_WIDTH - r;
+		lb = r;
+		tb = r;
+		bb = Runner.INNER_HEIGHT - r;
 		setColor(c);
 	}
 
+	public Ball(BallBuilder b) {
+		setX(b.x);
+		setY(b.y);
+		setR(b.r);
+		rb = Runner.INNER_WIDTH - r;
+		lb = r;
+		tb = r;
+		bb = Runner.INNER_HEIGHT - r;
+		setColor(b.c);
+	}
+
 	static class BallBuilder {
-		private int x, y, r, xv, yv;
+		private int x, y, r;
 		private Color c;
 		private Function f;
 
@@ -127,14 +136,6 @@ public class Ball implements Locatable {
 	@Override
 	public int getY() {
 		return y;
-	}
-
-	@Override
-	public boolean collides(Locatable obj) {
-		int dx = x - obj.getX();
-		int dy = y - obj.getY();
-		int rt = r + obj.getR();
-		return dx * dx + dy * dy < rt * rt;
 	}
 
 	public void setColor(Color c) {
@@ -269,9 +270,5 @@ public class Ball implements Locatable {
 	@Override
 	public int getBot() {
 		return y + r;
-	}
-
-	public static void ballBounce(Ball b1, Ball b2) {
-
 	}
 }

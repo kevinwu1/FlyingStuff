@@ -15,9 +15,9 @@ public class BallList {
 	}
 
 	public void add() {
-		int r = 25;
-		ballList.add(new Ball.BallBuilder().X(rand(r, Runner.INNER_WIDTH - r)).Y(rand(r, Runner.INNER_HEIGHT - r))
-				.R(rand(5, 20)).C(new Color(rand(0, 256), rand(0, 256), rand(0, 256))).build());
+		int r = rand(5, 20);
+		ballList.add(new Ball.BallBuilder().X(rand(r, Runner.INNER_WIDTH - r)).Y(rand(r, Runner.INNER_HEIGHT - r)).R(r)
+				.C(new Color(rand(0, 256), rand(0, 256), rand(0, 256))).build());
 
 	}
 
@@ -39,7 +39,6 @@ public class BallList {
 	}
 
 	public void drawAll(Graphics window, int t) {
-		// System.out.println("a");
 		for (Ball b : ballList) {
 			b.clear(window);
 		}
@@ -65,7 +64,6 @@ public class BallList {
 
 				@Override
 				public int x(int t) {
-					// System.out.println(t - clickTime + ": " + (xs + (dx * (t - clickTime)) / time));
 					return xs + (dx * (t - clickTime)) / time;
 				}
 

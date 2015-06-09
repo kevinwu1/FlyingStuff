@@ -12,8 +12,8 @@ import javax.swing.JPanel;
 
 public class Runner extends JFrame {
 	static Runner run;
-	static final int WIDTH = 1000;
-	static final int HEIGHT = 1000;
+	static final int WIDTH = 1920;
+	static final int HEIGHT = 1080;
 	static int INNER_WIDTH;
 	static int INNER_HEIGHT;
 	static final int addBallKey = KeyEvent.VK_SPACE;
@@ -64,9 +64,6 @@ public class Runner extends JFrame {
 		});
 
 		// TODO
-		// Mouse click converge.
-		// keyboard buttons add ball,
-
 		// features
 		// sound
 	}

@@ -23,6 +23,4 @@ interface Locatable {
 	public int getBot();
 
 	public int getTop();
-
-	public boolean collides(Locatable obj);
 }

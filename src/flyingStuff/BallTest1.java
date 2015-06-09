@@ -27,11 +27,11 @@ class BallTest1 extends Canvas implements Runnable, KeyListener, MouseListener, 
 		setBackground(Color.WHITE);
 		setVisible(true);
 		balls = new BallList();
-		// for (int i = 0; i < 1; i++) {
-		// balls.add();
-		// }
-		Ball ball1 = new Ball.BallBuilder().XY(900, 100).C(Color.RED).R(10).build();
-		ball1.moveLine(3, 4);
+		for (int i = 0; i < 1; i++) {
+			balls.add();
+		}
+		// Ball ball1 = new Ball.BallBuilder().XY(900, 100).C(Color.RED).R(200).build();
+		// ball1.moveLine(3, 4);
 		// ball1.moveAbs(new Function() {
 		// @Override
 		// public int x(int t) {
@@ -45,16 +45,14 @@ class BallTest1 extends Canvas implements Runnable, KeyListener, MouseListener, 
 		//
 		// @Override
 		// public int time() {
-		// return 100;
+		// return 100000;
 		// }
 		// });
+		// balls.add(ball1);
 
-		balls.add(ball1);
 		keys = new boolean[2];
 		this.addKeyListener(this);
 		this.addMouseListener(this);
-		// System.out.println(Runner.INNER_WIDTH);
-		// System.out.println(balls.getLength());
 		new Thread(this).start();
 	}
 
@@ -153,17 +151,13 @@ class BallTest1 extends Canvas implements Runnable, KeyListener, MouseListener, 
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		balls.scatter();
-		// System.out.println("up");
 	}
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		System.out.println("asdf");
-		balls.converge(e.getX(), e.getY(), t);
 	}
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		System.out.println("asdfasdf");
 	}
 }
