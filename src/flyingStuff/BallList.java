@@ -5,6 +5,8 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 
+import flyingStuff.Ball.Function;
+
 public class BallList {
 	private List<Ball> ballList;
 	int c = 0;
@@ -49,14 +51,44 @@ public class BallList {
 
 	}
 
-	public void converge(final int x, final int y, final int clickTime) {
-		final int time = 50;
+	public void converge(final int x, final int y, final int clickTime, final int time) {
 		for (Ball b : ballList) {
+			// b.moveCurveRel(new Function<Double>() {
+			// private final int div = 2;
+			// private double fact = 0.24;
+			//
+			// @Override
+			// public int time() {
+			// return 200;
+			// }
+			//
+			// @Override
+			// public Double x(Double t) {
+			// if (t < fact)
+			// return t / fact;
+			// return 1 + (1 - (t - fact) / (1 - fact))
+			// * Math.cos(Math.PI / 2 - 2 * Math.PI * (t - fact) / (1 - fact)) / div;
+			// }
+			//
+			// @Override
+			// public Double y(Double t) {
+			// if (t < fact)
+			// return Math.pow(((1 - 1 / (1 + Math.pow(Math.E, 10 * (t / fact - 0.5)))) / div) * 2, 2) / 2;
+			// return (1 - (t - fact) / (1 - fact))
+			// * Math.sin(Math.PI / 2 - 2 * Math.PI * (t - fact) / (1 - fact)) / div;
+			// }
+			//
+			// @Override
+			// public int timeDiff() {
+			// return clickTime;
+			// }
+			//
+			// }, x, y);
 			final int xs = b.getX();
 			final int ys = b.getY();
 			final int dx = x - xs;
 			final int dy = y - ys;
-			b.moveCurveAbs(new Ball.Function<Integer>() {
+			b.moveCurveAbs(new Function<Integer>() {
 				@Override
 				public Integer y(Integer t) {
 					return ys + (dy * (t - clickTime)) / time;
@@ -71,14 +103,18 @@ public class BallList {
 				public int time() {
 					return time + clickTime;
 				}
+
+				@Override
+				public int timeDiff() {
+					return clickTime;
+				}
 			});
 		}
 	}
 
-	public void scatter() {
+	public void scatter(int vel) {
 		for (Ball b : ballList) {
 			double ang = Math.random() * Math.PI * 2;
-			int vel = 10;
 			b.moveLineAcc(vel * Math.cos(ang), vel * Math.sin(ang));
 		}
 	}

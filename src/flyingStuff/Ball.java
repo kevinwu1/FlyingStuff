@@ -37,6 +37,8 @@ public class Ball implements Locatable {
 	private int curCur;
 
 	static abstract class Function<T> {
+		public abstract int timeDiff();
+
 		public abstract int time();
 
 		public abstract T x(T t);
@@ -327,12 +329,14 @@ public class Ball implements Locatable {
 	}
 
 	private void moveCurveRel(int t) {
+		t -= rel.timeDiff();
 		if (t > rel.time())
 			return;
 		double xg, yg;
 		int xf, yf;
 		xg = rel.x(t / (double) rel.time()).doubleValue();
 		yg = rel.y(t / (double) rel.time()).doubleValue();
+		System.out.println(t + ": " + xg + ", " + yg);
 		xf = (int) (xg * dx - yg * dy) + xStart;
 		yf = (int) (xg * dy + yg * dx) + yStart;
 		int xt = xref + (xneg ? -1 : 1) * xf;
