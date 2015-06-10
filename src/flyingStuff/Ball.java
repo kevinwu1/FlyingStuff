@@ -200,7 +200,7 @@ public class Ball implements Locatable {
 
 	public void clear(Graphics window) {
 		window.setColor(Color.white);
-		window.fillOval(getLeft(), getTop(), getR() * 2, getR() * 2);
+		window.fillOval(getLeft() - 1, getTop() - 1, getR() * 2 + 2, getR() * 2 + 2);
 		shrink();
 	}
 
@@ -235,7 +235,7 @@ public class Ball implements Locatable {
 	}
 
 	public void shrink() {
-		rAcc = minR * Math.pow(rAcc / minR, DECAY_FACTOR); // 20
+		rAcc = minR * Math.pow(rAcc / minR, DECAY_FACTOR);
 	}
 
 	@SafeVarargs

@@ -35,7 +35,7 @@ class BallTest1 extends Canvas implements Runnable, KeyListener, MouseListener, 
 		// for (int i = 0; i < 1; i++) {
 		// balls.add();
 		// }
-		Ball ball1 = new Ball.BallBuilder().XY(100, 500).C(Color.RED).R(20).build();
+		// Ball ball1 = new Ball.BallBuilder().XY(400, 500).C(Color.RED).R(400).build();
 		// ball1.moveLine(3, 4);
 		// ball1.moveCurveRel(new Function<Double>() {
 		// final int tim = 20;
@@ -116,7 +116,7 @@ class BallTest1 extends Canvas implements Runnable, KeyListener, MouseListener, 
 		// ball1.moveCurveRel(lower, 700, 500);
 		// ball1.moveCycleCurve(new int[] { 600 }, new int[] { 500 }, lower,
 		// lower);
-		balls.add(ball1);
+		// balls.add(ball1);
 		keys = new boolean[3];
 		this.addKeyListener(this);
 		this.addMouseListener(this);
@@ -141,11 +141,10 @@ class BallTest1 extends Canvas implements Runnable, KeyListener, MouseListener, 
 		// }
 		// }
 		Graphics2D twoDGraph = (Graphics2D) window;
-		twoDGraph.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		// twoDGraph.setStroke(new BasicStroke(4, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
 		if (back == null)
 			back = (BufferedImage) createImage(getWidth(), getHeight());
 		Graphics graphToBack = back.createGraphics();
+		((Graphics2D) graphToBack).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		balls.drawAll(graphToBack, t);
 		if (ballCD == 0) {
 			if (keys[0]) {
