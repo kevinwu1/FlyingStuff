@@ -4,6 +4,7 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -11,8 +12,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 
-class BallTest1 extends Canvas implements Runnable, KeyListener, MouseListener,
-		MouseMotionListener {
+class BallTest1 extends Canvas implements Runnable, KeyListener, MouseListener, MouseMotionListener {
 	BallList balls = new BallList();
 	public static int WIDTH;
 	public static int HEIGHT;
@@ -22,18 +22,20 @@ class BallTest1 extends Canvas implements Runnable, KeyListener, MouseListener,
 	private int ballkillCD = 0;
 	private int t = 0;
 	private BufferedImage back;
+	// audio
+	AudioTest at;
 	// mouse vel
 	private int x1 = -1, x2 = -1, y1 = -1, y2 = -1;
 
 	public BallTest1() {
 		setBackground(Color.WHITE);
 		setVisible(true);
+		at = new AudioTest();
 		balls = new BallList();
 		// for (int i = 0; i < 1; i++) {
 		// balls.add();
 		// }
-		Ball ball1 = new Ball.BallBuilder().XY(100, 500).C(Color.RED).R(20)
-				.build();
+		Ball ball1 = new Ball.BallBuilder().XY(100, 500).C(Color.RED).R(20).build();
 		// ball1.moveLine(3, 4);
 		// ball1.moveCurveRel(new Function<Double>() {
 		// final int tim = 20;
@@ -115,7 +117,6 @@ class BallTest1 extends Canvas implements Runnable, KeyListener, MouseListener,
 		// ball1.moveCycleCurve(new int[] { 600 }, new int[] { 500 }, lower,
 		// lower);
 		balls.add(ball1);
-
 		keys = new boolean[2];
 		this.addKeyListener(this);
 		this.addMouseListener(this);
@@ -140,6 +141,8 @@ class BallTest1 extends Canvas implements Runnable, KeyListener, MouseListener,
 		// }
 		// }
 		Graphics2D twoDGraph = (Graphics2D) window;
+		twoDGraph.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		// twoDGraph.setStroke(new BasicStroke(4, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
 		if (back == null)
 			back = (BufferedImage) createImage(getWidth(), getHeight());
 		Graphics graphToBack = back.createGraphics();
@@ -149,15 +152,20 @@ class BallTest1 extends Canvas implements Runnable, KeyListener, MouseListener,
 				balls.add();
 				ballCD = BALL_CD;
 			}
-		} else
+		}
+		else
 			ballCD--;
 		if (ballkillCD == 0) {
 			if (keys[1]) {
 				balls.remove(graphToBack);
 				ballkillCD = BALL_CD;
 			}
-		} else
+		}
+		else
 			ballkillCD--;
+		double fact = at.getPulse();
+		if (fact != -1)
+			balls.pulse(fact);
 		twoDGraph.drawImage(back, null, 0, 0);
 	}
 
@@ -190,12 +198,14 @@ class BallTest1 extends Canvas implements Runnable, KeyListener, MouseListener,
 
 	@Override
 	public void run() {
+		at.run();
 		try {
 			while (true) {
 				Thread.sleep(10);
 				repaint();
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 		}
 	}
 
@@ -224,7 +234,8 @@ class BallTest1 extends Canvas implements Runnable, KeyListener, MouseListener,
 		// System.out.println(x1 + "," + x2 + "|" + y1 + "," + y2);
 		if (x1 < 0 || x2 < 0 || y1 < 0 || y2 < 0) {
 			balls.scatter(10);
-		} else {
+		}
+		else {
 			int dxv = x2 - x1;
 			int dyv = y2 - y1;
 			int vel = (int) Math.sqrt(dxv * dxv + dyv * dyv);

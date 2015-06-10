@@ -4,9 +4,11 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 public class Ball implements Locatable {
-	static final int X = 50, Y = 50, R = 10;
+	static final int X = 50, Y = 50, R = 10, R_DIFF_MAX = 100;
+	static final double DECAY_FACTOR = 0.99;
 	static final Color C = Color.RED;
-	private int x, y, r;
+	private int x, y, ri;
+	double rAcc;
 	private Color c;
 
 	// boundary detection
@@ -14,8 +16,8 @@ public class Ball implements Locatable {
 
 	// movement
 	private short moveMode;
-	private static final short moveLineMode = 0, moveLineAccMode = 1,
-			moveCurveAbsMode = 2, moveCurveRelMode = 3, cycleCurvesMode = 4;
+	private static final short moveLineMode = 0, moveLineAccMode = 1, moveCurveAbsMode = 2, moveCurveRelMode = 3,
+			cycleCurvesMode = 4;
 	// moveLine
 	private int xv, yv;
 	// moveLineAcc
@@ -47,14 +49,15 @@ public class Ball implements Locatable {
 	}
 
 	public Ball() {
-		this(new BallBuilder().XY((int) (Math.random() * 200),
-				(int) (Math.random() * 200)).R(5));
+		this(new BallBuilder().XY((int) (Math.random() * 200), (int) (Math.random() * 200)).R(5));
 	}
 
 	public Ball(int x, int y, int r, Color c) {
 		setX(x);
 		setY(y);
-		setR(r);
+		rAcc = r;
+		ri = r;
+		rAcc = r;
 		rb = Runner.INNER_WIDTH - r;
 		lb = r;
 		tb = r;
@@ -65,11 +68,13 @@ public class Ball implements Locatable {
 	public Ball(BallBuilder b) {
 		setX(b.x);
 		setY(b.y);
-		setR(b.r);
-		rb = Runner.INNER_WIDTH - r;
-		lb = r;
-		tb = r;
-		bb = Runner.INNER_HEIGHT - r;
+		rAcc = b.r;
+		ri = getR();
+		rAcc = getR();
+		rb = Runner.INNER_WIDTH - getR();
+		lb = getR();
+		tb = getR();
+		bb = Runner.INNER_HEIGHT - getR();
 		setColor(b.c);
 	}
 
@@ -163,23 +168,18 @@ public class Ball implements Locatable {
 	}
 
 	@Override
-	public void setR(int r) {
-		this.r = r;
-	}
-
-	@Override
 	public int getR() {
-		return r;
+		return (int) rAcc;
 	}
 
 	@Override
 	public int getRight() {
-		return x + r;
+		return x + getR();
 	}
 
 	@Override
 	public int getBot() {
-		return y + r;
+		return y + getR();
 	}
 
 	@Override
@@ -200,6 +200,7 @@ public class Ball implements Locatable {
 	public void clear(Graphics window) {
 		window.setColor(Color.white);
 		window.fillOval(getLeft(), getTop(), getR() * 2, getR() * 2);
+		shrink();
 	}
 
 	public void moveLine(int xv, int yv) {
@@ -232,24 +233,16 @@ public class Ball implements Locatable {
 		dy = yt - y;
 	}
 
-	public void grow() {
-		setR(r + 1);
-	}
-
 	public void shrink() {
-		setR(r - 1);
-
+		rAcc = Math.pow(rAcc, DECAY_FACTOR);
 	}
 
 	@SafeVarargs
-	public final void moveCycleCurve(int[] xCoords, int[] yCoords,
-			Function<Double>... curves) {
+	public final void moveCycleCurve(int[] xCoords, int[] yCoords, Function<Double>... curves) {
 		if (xCoords.length != yCoords.length)
-			throw new IllegalArgumentException(
-					"Coordinate array lengths do not match");
+			throw new IllegalArgumentException("Coordinate array lengths do not match");
 		if (curves.length != xCoords.length + 1)
-			throw new IllegalArgumentException(
-					"Need exactly N+1 curves and N coordinates");
+			throw new IllegalArgumentException("Need exactly N+1 curves and N coordinates");
 		len = curves.length;
 		moveMode = cycleCurvesMode;
 		cCX = new int[len];
@@ -320,7 +313,8 @@ public class Ball implements Locatable {
 			xref = 2 * rb - xref;
 			xneg = !xneg;
 			xt = rb - (x - rb);
-		} else if (x < lb) {
+		}
+		else if (x < lb) {
 			xref = 2 * lb - xref;
 			xneg = !xneg;
 			xt = lb - x + lb;
@@ -331,7 +325,8 @@ public class Ball implements Locatable {
 			yref = 2 * bb - yref;
 			yneg = !yneg;
 			yt = bb - (y - bb);
-		} else if (y < lb) {
+		}
+		else if (y < lb) {
 			yref = 2 * tb - yref;
 			yneg = !yneg;
 			yt = tb - y + tb;
@@ -355,7 +350,8 @@ public class Ball implements Locatable {
 			xref = 2 * rb - xref;
 			xneg = !xneg;
 			xt = rb - (x - rb);
-		} else if (x < lb) {
+		}
+		else if (x < lb) {
 			xref = 2 * lb - xref;
 			xneg = !xneg;
 			xt = lb - x + lb;
@@ -366,7 +362,8 @@ public class Ball implements Locatable {
 			yref = 2 * bb - yref;
 			yneg = !yneg;
 			yt = bb - (y - bb);
-		} else if (y < lb) {
+		}
+		else if (y < lb) {
 			yref = 2 * tb - yref;
 			yneg = !yneg;
 			yt = tb - y + tb;
@@ -374,8 +371,7 @@ public class Ball implements Locatable {
 		y = yt;
 	}
 
-	private void cycleCurveRel(int t, Function<Double> rel, int xStart,
-			int yStart, int xTar, int yTar) {
+	private void cycleCurveRel(int t, Function<Double> rel, int xStart, int yStart, int xTar, int yTar) {
 		if (t > rel.time())
 			return;
 		int dx = xTar - xStart;
@@ -391,7 +387,8 @@ public class Ball implements Locatable {
 			xref = 2 * rb - xref;
 			xneg = !xneg;
 			xt = rb - (x - rb);
-		} else if (x < lb) {
+		}
+		else if (x < lb) {
 			xref = 2 * lb - xref;
 			xneg = !xneg;
 			xt = lb - x + lb;
@@ -402,7 +399,8 @@ public class Ball implements Locatable {
 			yref = 2 * bb - yref;
 			yneg = !yneg;
 			yt = bb - (y - bb);
-		} else if (y < lb) {
+		}
+		else if (y < lb) {
 			yref = 2 * tb - yref;
 			yneg = !yneg;
 			yt = tb - y + tb;
@@ -417,13 +415,16 @@ public class Ball implements Locatable {
 			curCur %= len;
 			clearRefl();
 		}
-		cycleCurveRel(t - cumulCurveTimes[curCur], relCurves[curCur],
-				cCX[curCur], cCY[curCur], cCX[(curCur + 1) % len],
-				cCY[(curCur + 1) % len]);
+		cycleCurveRel(t - cumulCurveTimes[curCur], relCurves[curCur], cCX[curCur], cCY[curCur],
+				cCX[(curCur + 1) % len], cCY[(curCur + 1) % len]);
 	}
 
 	private void clearRefl() {
 		xref = yref = 0;
 		xneg = yneg = false;
+	}
+
+	void pulse(double fact) {
+		rAcc = Math.max((ri + R_DIFF_MAX * fact), rAcc);
 	}
 }

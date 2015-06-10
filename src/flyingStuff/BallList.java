@@ -18,8 +18,7 @@ public class BallList {
 
 	public void add() {
 		int r = rand(5, 20);
-		ballList.add(new Ball.BallBuilder().X(rand(r, Runner.INNER_WIDTH - r))
-				.Y(rand(r, Runner.INNER_HEIGHT - r)).R(r)
+		ballList.add(new Ball.BallBuilder().X(rand(r, Runner.INNER_WIDTH - r)).Y(rand(r, Runner.INNER_HEIGHT - r)).R(r)
 				.C(new Color(rand(0, 256), rand(0, 256), rand(0, 256))).build());
 
 	}
@@ -52,8 +51,7 @@ public class BallList {
 
 	}
 
-	public void converge(final int x, final int y, final int clickTime,
-			final int time) {
+	public void converge(final int x, final int y, final int clickTime, final int time) {
 		for (Ball b : ballList) {
 			// b.moveCurveRel(new Function<Double>() {
 			// private final int div = 2;
@@ -122,6 +120,11 @@ public class BallList {
 			double ang = Math.random() * Math.PI * 2;
 			b.moveLineAcc(vel * Math.cos(ang), vel * Math.sin(ang));
 		}
+	}
+
+	public void pulse(double fact) {
+		for (Ball b : ballList)
+			b.pulse(fact);
 	}
 
 	public int getLength() {
