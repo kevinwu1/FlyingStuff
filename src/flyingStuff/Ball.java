@@ -4,8 +4,9 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 public class Ball implements Locatable {
-	static final int X = 50, Y = 50, R = 10, R_DIFF_MAX = 100;
-	static final double DECAY_FACTOR = 0.99;
+	static final int X = 50, Y = 50, R = 10, R_DIFF_MAX = 100, minR = 5;
+	static final double DECAY_FACTOR = 0.97, VEL_DECAY = 0.99;
+	public static boolean friction = true;
 	static final Color C = Color.RED;
 	private int x, y, ri;
 	double rAcc;
@@ -234,7 +235,7 @@ public class Ball implements Locatable {
 	}
 
 	public void shrink() {
-		rAcc = Math.pow(rAcc, DECAY_FACTOR);
+		rAcc = minR * Math.pow(rAcc / minR, DECAY_FACTOR); // 20
 	}
 
 	@SafeVarargs
@@ -295,8 +296,8 @@ public class Ball implements Locatable {
 	}
 
 	private void moveLineAcc() {
-		xAcc += xvAcc;
-		yAcc += yvAcc;
+		xAcc += xvAcc *= friction ? VEL_DECAY : 1;
+		yAcc += yvAcc *= friction ? VEL_DECAY : 1;
 		if (xAcc > rb || xAcc < lb)
 			xAcc += xvAcc = -xvAcc;
 		if (yAcc > bb || yAcc < tb)
@@ -425,6 +426,6 @@ public class Ball implements Locatable {
 	}
 
 	void pulse(double fact) {
-		rAcc = Math.max((ri + R_DIFF_MAX * fact), rAcc);
+		rAcc = Math.max(2 * Math.random() * (ri + R_DIFF_MAX * fact), rAcc);
 	}
 }

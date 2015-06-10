@@ -15,19 +15,13 @@ public class AudioTest {
 	private double prevLevel = 0;
 	int bt = 0;
 
-	private double prevmax;
-
-	public static void main(String[] args) {
-		new AudioTest().run();
-	}
-
 	public void run() {
 		setup();
 	}
 
 	public AudioTest() {
 		minim = new Minim(this);
-		player = minim.loadFile("ka.mp3");
+		player = minim.loadFile(Runner.SONG);
 	}
 
 	private void setup() {
@@ -39,7 +33,6 @@ public class AudioTest {
 		double l = player.mix.level();
 		double diff = l - prevLevel;
 		double lmax = max(player.mix);
-		double mdiff = lmax - prevmax;
 		if (diff > 0.05) {
 			// System.out.print("beat" + bt++ + ", \t");
 			// System.out.printf("lvl: %.2f ", l);
@@ -52,7 +45,6 @@ public class AudioTest {
 			o = lmax * (l + diff);
 		}
 		prevLevel = l;
-		prevmax = lmax;
 		return o;
 	}
 

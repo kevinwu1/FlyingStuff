@@ -117,7 +117,7 @@ class BallTest1 extends Canvas implements Runnable, KeyListener, MouseListener, 
 		// ball1.moveCycleCurve(new int[] { 600 }, new int[] { 500 }, lower,
 		// lower);
 		balls.add(ball1);
-		keys = new boolean[2];
+		keys = new boolean[3];
 		this.addKeyListener(this);
 		this.addMouseListener(this);
 		this.addMouseMotionListener(this);
@@ -163,6 +163,7 @@ class BallTest1 extends Canvas implements Runnable, KeyListener, MouseListener, 
 		}
 		else
 			ballkillCD--;
+
 		double fact = at.getPulse();
 		if (fact != -1)
 			balls.pulse(fact);
@@ -171,29 +172,30 @@ class BallTest1 extends Canvas implements Runnable, KeyListener, MouseListener, 
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if (e.getKeyCode() == Runner.addBallKey) {
+		if (e.getKeyCode() == Runner.ADD_BALL_KEY) {
 			keys[0] = true;
 		}
-		if (e.getKeyCode() == Runner.removeBallKey) {
+		if (e.getKeyCode() == Runner.REMOVE_BALL_KEY) {
 			keys[1] = true;
 		}
-
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		if (e.getKeyCode() == Runner.addBallKey) {
+		if (e.getKeyCode() == Runner.ADD_BALL_KEY) {
 			keys[0] = false;
 		}
-		if (e.getKeyCode() == Runner.removeBallKey) {
+		if (e.getKeyCode() == Runner.REMOVE_BALL_KEY) {
 			keys[1] = false;
 		}
-
 	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
 
+		if (e.getKeyChar() == Runner.FRICTION_KEY) {
+			Ball.friction = !Ball.friction;
+		}
 	}
 
 	@Override

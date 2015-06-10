@@ -17,7 +17,7 @@ public class BallList {
 	}
 
 	public void add() {
-		int r = rand(5, 20);
+		int r = rand(4, 20);// blaze it
 		ballList.add(new Ball.BallBuilder().X(rand(r, Runner.INNER_WIDTH - r)).Y(rand(r, Runner.INNER_HEIGHT - r)).R(r)
 				.C(new Color(rand(0, 256), rand(0, 256), rand(0, 256))).build());
 
@@ -37,7 +37,8 @@ public class BallList {
 	}
 
 	private static int rand(int lo, int hi) {
-		return lo + (int) (Math.random() * (hi - lo));
+		final double r = Math.random() < 0.5 ? Math.sqrt(Math.random()) : Math.pow(Math.random(), 2);
+		return lo + (int) (r * (hi - lo));
 	}
 
 	public void drawAll(Graphics window, int t) {

@@ -16,8 +16,9 @@ public class Runner extends JFrame {
 	static final int HEIGHT = 1080;
 	static int INNER_WIDTH;
 	static int INNER_HEIGHT;
-	static final int addBallKey = KeyEvent.VK_SPACE;
-	static final int removeBallKey = KeyEvent.VK_LEFT;
+	static final int ADD_BALL_KEY = KeyEvent.VK_SPACE, REMOVE_BALL_KEY = KeyEvent.VK_LEFT;
+	static final char FRICTION_KEY = 'f';
+	static String SONG;
 
 	public Runner() {
 		super("Bounce");
@@ -28,6 +29,7 @@ public class Runner extends JFrame {
 	}
 
 	public static void main(String args[]) {
+		SONG = args[0];
 		run = new Runner();
 		INNER_WIDTH = run.getContentPane().getWidth();
 		INNER_HEIGHT = run.getContentPane().getHeight();
@@ -41,8 +43,9 @@ public class Runner extends JFrame {
 		credits.setLocation((INNER_WIDTH - 200) / 2, INNER_HEIGHT - credits.getHeight());
 		titleScreen.add(credits);
 
-		JLabel instr = new JLabel("Press " + KeyEvent.getKeyText(addBallKey) + " to spawn a ball. Press "
-				+ KeyEvent.getKeyText(removeBallKey) + " to remove a ball. Click to make balls converge.");
+		JLabel instr = new JLabel("Press " + KeyEvent.getKeyText(ADD_BALL_KEY) + " to spawn a ball. Press "
+				+ KeyEvent.getKeyText(REMOVE_BALL_KEY) + " to remove a ball. Press " + FRICTION_KEY
+				+ " to toggle friction. Click to make balls converge.");
 		instr.setSize(instr.getText().length() * 6, 200);
 		instr.setLocation((INNER_WIDTH - instr.getWidth()) / 2, INNER_HEIGHT - 600);
 		titleScreen.add(instr);
