@@ -51,16 +51,9 @@ class BallTest1 extends Canvas implements Runnable, KeyListener, MouseListener, 
 
 	@Override
 	public void paint(Graphics window) {
-
 		t++;
-		// for (int i = 0; i < balls.getLength(); i++) {
-		// while (balls.getBalls().get(i).getR() < 30) {
-		// balls.getBalls().get(i).grow();
-		// }
-		// while (balls.getBalls().get(i).getR() > 1) {
-		// balls.getBalls().get(i).shrink();
-		// }
-		// }
+		if (!audio.isPlaying())
+			audio.goNext();
 		Graphics2D twoDGraph = (Graphics2D) window;
 		if (back == null)
 			back = (BufferedImage) createImage(getWidth(), getHeight());
