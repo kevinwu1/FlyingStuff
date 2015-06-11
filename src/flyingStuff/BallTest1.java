@@ -29,11 +29,12 @@ class BallTest1 extends Canvas implements Runnable, KeyListener, MouseListener, 
 	public BallTest1() {
 		setBackground(Color.WHITE);
 		setVisible(true);
-		audio = new Audio();
+		if (Audio.N != 0)
+			audio = new Audio();
 		balls = new BallList();
-		// for (int i = 0; i < 1; i++) {
-		// balls.add();
-		// }
+		for (int i = 0; i < 3; i++) {
+			balls.add();
+		}
 		// Ball ball1 = new Ball.BallBuilder().XY(400, 500).C(Color.RED).R(400).build();
 		// ball1.moveLine(3, 4);
 		// balls.add(ball1);
@@ -52,34 +53,45 @@ class BallTest1 extends Canvas implements Runnable, KeyListener, MouseListener, 
 	@Override
 	public void paint(Graphics window) {
 		t++;
-		if (!audio.isPlaying())
-			audio.goNext();
+		if (Audio.N != 0) {
+			if (!audio.isPlaying() && !Audio.paused)
+				audio.goNext();
+		}
 		Graphics2D twoDGraph = (Graphics2D) window;
 		if (back == null)
 			back = (BufferedImage) createImage(getWidth(), getHeight());
 		Graphics graphToBack = back.createGraphics();
 		((Graphics2D) graphToBack).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		graphToBack.clearRect(0, 0, 600, 240);
+		graphToBack.clearRect(0, 0, 1400, 240);
 		balls.checkRemove(graphToBack);
 		balls.drawAll(graphToBack, t);
-		double fact = audio.getPulse();
-		if (fact != -1)
-			balls.pulse(fact);
+		if (Audio.N != 0) {
+			double fact = audio.getPulse();
+			if (fact != -1)
+				balls.pulse(fact);
+		}
 		if (help) {
-			graphToBack.setFont(new Font("Lucida Console", Font.PLAIN, 20));
+			graphToBack.setFont(new Font("Unifont", Font.PLAIN, 20));
 			graphToBack.setColor(Ball.friction ? Color.GREEN : Color.RED);
 			graphToBack.drawString("[F]riction is " + (Ball.friction ? "On" : "Off"), 10, 20);
-			graphToBack.setColor(audio.isPlaying() ? Color.GREEN : Color.RED);
-			graphToBack.drawString((audio.isPlaying() ? "Playing" : "Paused") + " [SPACE]", 10, 40);
+			if (Audio.N != 0) {
+				graphToBack.setColor(audio.isPlaying() ? Color.GREEN : Color.RED);
+				graphToBack.drawString((audio.isPlaying() ? "Playing" : "Paused") + " [SPACE]", 10, 40);
+				graphToBack.setColor(Color.BLACK);
+				graphToBack.drawString("Song: " + Audio.getCurrentSongName(), 10, 60);
+				graphToBack.drawString("Next Song: " + Audio.whatsNext(), 10, 80);
+				graphToBack.drawString("Go To Next Song [L]", 10, 100);
+				graphToBack.drawString("Go To Prev Song [J] ", 10, 120);
+			}
 			graphToBack.setColor(Color.BLACK);
-			graphToBack.drawString("Song: " + Audio.getCurrentSongName(), 10, 60);
-			graphToBack.drawString("Next Song: " + Audio.whatsNext(), 10, 80);
-			graphToBack.drawString("Go To Next Song [L]", 10, 100);
-			graphToBack.drawString("Go To Prev Song [J] ", 10, 120);
 			graphToBack.drawString("Spawn Ball [Q] ", 10, 140);
 			graphToBack.drawString("Delete Ball [X] ", 10, 160);
-			graphToBack.drawString("Shuffle Songs [S] ", 10, 180);
-			graphToBack.drawString("Random Song [R] ", 10, 200);
+			if (Audio.N != 0) {
+				graphToBack.setColor(Audio.isShuffled() ? Color.GREEN : Color.RED);
+				graphToBack.drawString("Toggle Shuffle [S] " + (Audio.isShuffled() ? "Shuffled" : ""), 10, 180);
+				graphToBack.setColor(Color.BLACK);
+				graphToBack.drawString("Random Song [R] ", 10, 200);
+			}
 			graphToBack.drawString("Show/Hide Help [H] ", 10, 220);
 		}
 		twoDGraph.drawImage(back, null, 0, 0);
@@ -111,32 +123,39 @@ class BallTest1 extends Canvas implements Runnable, KeyListener, MouseListener, 
 			Ball.friction = !Ball.friction;
 		}
 		if (e.getKeyChar() == Runner.PREV_KEY) {
-			audio.goPrev();
+			if (Audio.N != 0)
+				audio.goPrev();
 		}
 		if (e.getKeyChar() == Runner.PAUSE_KEY) {
-			audio.togglePause();
+			if (Audio.N != 0)
+				audio.togglePause();
 		}
 		if (e.getKeyChar() == Runner.NEXT_KEY) {
-			audio.goNext();
+			if (Audio.N != 0)
+				audio.goNext();
 		}
 		if (e.getKeyChar() == Runner.HELP_KEY) {
 			help = !help;
 		}
 		if (e.getKeyChar() == Runner.RANDOM_KEY) {
-			Audio.toggleShuffleSongs();
-			if (!Audio.isShuffled())
+			if (Audio.N != 0) {
 				Audio.toggleShuffleSongs();
-			audio.goNext();
+				if (!Audio.isShuffled())
+					Audio.toggleShuffleSongs();
+				audio.goNext();
+			}
 		}
 		if (e.getKeyChar() == Runner.SHUFFLE_KEY) {
-			Audio.toggleShuffleSongs();
+			if (Audio.N != 0)
+				Audio.toggleShuffleSongs();
 		}
 
 	}
 
 	@Override
 	public void run() {
-		audio.run();
+		if (Audio.N != 0)
+			audio.run();
 		try {
 			while (true) {
 				Thread.sleep(10);

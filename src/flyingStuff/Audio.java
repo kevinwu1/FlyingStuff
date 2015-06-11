@@ -25,6 +25,7 @@ public class Audio {
 	static String[] songs;
 	static int[] songOrder;
 	static int[] noShuffleOrder;
+	static boolean paused;
 
 	public static void readFromDir(String dir) {
 		songDir = dir + File.separator;
@@ -56,57 +57,82 @@ public class Audio {
 	}
 
 	public static String[] listFilesForFolder(final File folder) {
-		List<String> o = new ArrayList<>();
-		for (final File fileEntry : folder.listFiles()) {
-			String name = fileEntry.getName();
-			for (String format : formats)
-				if (name.toUpperCase().endsWith(format))
-					o.add(name);
+		try {
+			List<String> o = new ArrayList<>();
+			for (final File fileEntry : folder.listFiles()) {
+				String name = fileEntry.getName();
+				for (String format : formats)
+					if (name.toUpperCase().endsWith(format)) {
+						System.out.println(name);
+						o.add(name);
+					}
+			}
+			return o.toArray(new String[o.size()]);
 		}
-		return o.toArray(new String[o.size()]);
+		catch (NullPointerException e) {
+			return new String[0];
+		}
 	}
 
 	public static String getPrevSongName() {
+		if (N == 0)
+			return "";
 		if (shuffled)
 			return songs[songOrder[song = (song + N - 1) % N]];
 		return songs[song = (song + N - 1) % N];
 	}
 
 	public static String getNextSongName() {
+		if (N == 0)
+			return "";
 		if (shuffled)
 			return songs[songOrder[song = (song + 1) % N]];
 		return songs[song = (song + 1) % N];
 	}
 
 	public static String getCurrentSongName() {
+		if (N == 0)
+			return "";
 		if (shuffled)
 			return songs[songOrder[song]];
 		return songs[song];
 	}
 
 	public static String whatsNext() {
+		if (N == 0)
+			return "";
 		if (shuffled)
 			return songs[songOrder[(song + 1) % N]];
 		return songs[(song + 1) % N];
 	}
 
 	public void goPrev() {
-		player.pause();
-		player = minim.loadFile(songDir + getPrevSongName());
-		player.play();
+		if (N != 0) {
+			player.pause();
+			player = minim.loadFile(songDir + getPrevSongName());
+			player.play();
+		}
 	}
 
 	public void togglePause() {
-		if (player.isPlaying())
-			player.pause();
-		else
-			player.play();
+		if (N != 0) {
+			if (player.isPlaying()) {
+				player.pause();
+				paused = true;
+			}
+			else {
+				player.play();
+				paused = false;
+			}
+		}
 	}
 
 	public void goNext() {
-		player.pause();
-		player = minim.loadFile(songDir + getNextSongName());
-		player.play();
+		if (N != 0) {
+			player.pause();
+			player = minim.loadFile(songDir + getNextSongName());
+			player.play();
+		}
 	}
 
 	public static boolean isShuffled() {
@@ -125,6 +151,7 @@ public class Audio {
 
 	public Audio() {
 		minim = new Minim(this);
+		minim.debugOff();
 		player = minim.loadFile(songDir + getCurrentSongName());
 	}
 

@@ -3,7 +3,6 @@ package flyingStuff;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -28,12 +27,14 @@ public class Runner extends JFrame {
 	}
 
 	public static void main(String args[]) {
-		Audio.readFromDir(args[0]);
-
+		try {
+			Audio.readFromDir(args[0]);
+		}
+		catch (Exception e) {
+		}
 		run = new Runner();
 		INNER_WIDTH = run.getContentPane().getWidth();
 		INNER_HEIGHT = run.getContentPane().getHeight();
-
 		final JPanel titleScreen = new JPanel();
 		titleScreen.setLayout(null);
 
@@ -43,16 +44,8 @@ public class Runner extends JFrame {
 		credits.setLocation((INNER_WIDTH - 200) / 2, INNER_HEIGHT - credits.getHeight());
 		titleScreen.add(credits);
 
-		JLabel instr = new JLabel("Press " + KeyEvent.getKeyText(ADD_BALL_KEY) + " to spawn a ball. Press "
-				+ KeyEvent.getKeyText(REMOVE_BALL_KEY) + " to remove a ball. Press " + FRICTION_KEY
-				+ " to toggle friction. Click to make balls converge.");
-		instr.setSize(instr.getText().length() * 6, 200);
-		instr.setLocation((INNER_WIDTH - instr.getWidth()) / 2, INNER_HEIGHT - 600);
-		titleScreen.add(instr);
-
 		JButton startBut = new JButton("Start");
 		startBut.setBackground(Color.GREEN);
-		startBut.setText("Start");
 		startBut.setSize(200, 50);
 		startBut.setLocation((Runner.INNER_WIDTH - startBut.getWidth()) / 2, Runner.INNER_HEIGHT - 100);
 		titleScreen.add(startBut);
@@ -65,9 +58,5 @@ public class Runner extends JFrame {
 				run.add(new BallTest1());
 			}
 		});
-
-		// TODO
-		// features
-		// sound
 	}
 }
