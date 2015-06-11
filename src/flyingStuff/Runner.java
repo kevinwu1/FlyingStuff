@@ -16,9 +16,8 @@ public class Runner extends JFrame {
 	static final int HEIGHT = 1080;
 	static int INNER_WIDTH;
 	static int INNER_HEIGHT;
-	static final int ADD_BALL_KEY = KeyEvent.VK_SPACE, REMOVE_BALL_KEY = KeyEvent.VK_LEFT;
-	static final char FRICTION_KEY = 'f';
-	static String SONG;
+	static final char ADD_BALL_KEY = 'q', REMOVE_BALL_KEY = 'x', FRICTION_KEY = 'f', PREV_KEY = 'j', PAUSE_KEY = ' ',
+			SHUFFLE_KEY = 's', RANDOM_KEY = 'r', NEXT_KEY = 'l', HELP_KEY = 'h';
 
 	public Runner() {
 		super("Bounce");
@@ -29,7 +28,8 @@ public class Runner extends JFrame {
 	}
 
 	public static void main(String args[]) {
-		SONG = args[0];
+		Audio.readFromDir(args[0]);
+
 		run = new Runner();
 		INNER_WIDTH = run.getContentPane().getWidth();
 		INNER_HEIGHT = run.getContentPane().getHeight();

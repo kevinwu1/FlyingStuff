@@ -10,6 +10,7 @@ import flyingStuff.Ball.Function;
 public class BallList {
 	private List<Ball> ballList;
 	int c = 0;
+	private boolean remove = false;
 
 	@SuppressWarnings("unused")
 	public BallList() {
@@ -27,13 +28,19 @@ public class BallList {
 		ballList.add(b);
 	}
 
-	public void remove(Graphics window) {
-		if (ballList.size() > 0) {
-			int removed = ballList.size() - 1;
-			ballList.get(removed).clear(window);
-			ballList.remove(removed);
+	public void checkRemove(Graphics window) {
+		if (remove) {
+			if (ballList.size() > 0) {
+				int removed = ballList.size() - 1;
+				ballList.get(removed).clear(window);
+				ballList.remove(removed);
+			}
 		}
+		remove = false;
+	}
 
+	public void remove() {
+		remove = true;
 	}
 
 	private static int rand(int lo, int hi) {
